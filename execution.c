@@ -1,5 +1,10 @@
 #include "main.h"
 
+/**
+ * execute - execute a command
+ * @args: arguments
+*/
+
 void execute(args_t *args)
 {
 	pid_t id;
@@ -19,5 +24,12 @@ void execute(args_t *args)
 	if (id > 0)
 	{
 		wait(&status);
+		if (!isatty(STDIN_FILENO))
+		{
+			free(args->buff);
+			free(args->cmd);
+			exit(0);
+		}
+		fflush(stdout);
 	}
 }

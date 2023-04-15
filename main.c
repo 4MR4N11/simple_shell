@@ -1,70 +1,41 @@
 #include "main.h"
 
-int words_counter(char *str)
-{
-	int words;
-	int i;
-
-	i = 0;
-	words = 0;
-	while (str[i] && str[i] != '\n')
-	{
-		while ((str[i] && str[i] != '\n') && (str[i] == 32 || str[i] == '\t'))
-			i++;
-		if ((str[i] && str[i] != '\n') && str[i] != ' ' && str[i] != '\t')
-			words++;
-		while ((str[i] && str[i] != '\n') && str[i] != ' ' && str[i] != '\t')
-			i++;
-	}
-	return (words);
-}
+/**
+ * main - entry point.
+ * Description: simple shell.
+ * @ac: Number of arguments.
+ * @av: The arguments.
+ * @env: The environment variables.
+ * Return: 1 if ac != 1.
+*/
 
 int	main(int ac, char **av, char **env)
 {
-	char *buff = NULL;
-	size_t len;
-	ssize_t read_check;
 	args_t args;
-	int i;
 
-	i = 0;
-	args.cmd = NULL;
-	args.env = env;
-	args.av = av;
-	while (1)
+	if (ac == 1)
 	{
-		printf("\033[38;2;0;63;92msimple_shell$\033[0m ");
-		read_check = getline(&buff, &len, stdin);
-		if (read_check == -1)
+		args.buff = NULL;
+		args.cmd = NULL;
+		args.env = env;
+		args.av = av;
+		while (1)
 		{
-			free(buff);
-			if (!errno)
-				exit(EXIT_SUCCESS);
-			perror(av[0]);
-			exit(EXIT_FAILURE);
-		}
-		if(buff)
-		{
-			if (args.cmd)
+			if (isatty(STDIN_FILENO))
+				printf("\033[38;2;0;63;92msimple_shell$\033[0m ");
+			args.read_check = getline(&args.buff, &args.len, stdin);
+			if (args.read_check == -1)
 			{
-				i = 0;
-				free(args.cmd);
-				args.cmd = NULL;
+				free(args.buff);
+				if (!errno)
+					exit(EXIT_SUCCESS);
+				perror(av[0]);
+				exit(EXIT_FAILURE);
 			}
-			args.words = words_counter(buff);
-			args.cmd = malloc(sizeof(char *) * args.words);
-			i = 0;
-			args.cmd[0] = strtok(buff, " \n\t");
-			while(++i < args.words)
-				args.cmd[i] = strtok(NULL, " \n\t");
+			split_cmd(&args);
+			execute(&args);
 		}
-		if (!args.cmd)
-		{
-			free(buff);
-			perror(av[0]);
-			exit(EXIT_FAILURE);
-		}
-		execute(&args);
 	}
-	return (0);
+	printf("Usage: ./hsh\n");
+	return (EXIT_FAILURE);
 }
