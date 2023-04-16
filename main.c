@@ -32,6 +32,7 @@ int	main(int ac, char **av, char **env)
 				perror(av[0]);
 				exit(EXIT_FAILURE);
 			}
+			split_path(&args);
 			split_cmd(&args);
 			execute(&args);
 		}

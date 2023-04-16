@@ -28,10 +28,18 @@ typedef struct args
 	ssize_t read_check;
 	char **av;
 	int words;
+	char **path;
 } args_t;
 
 void execute(args_t *args);
-int words_counter(char *str);
+int words_counter(char *str, int c);
 void split_cmd(args_t *args);
+void split_path(args_t *args);
+int _strncmp(char *s1, char *s2, int n);
+char *_strcpy(char *dest, char *src);
+int _strlen(char *s);
+char *_strcat(char *dest, char *src);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char *_memcpy(char *dest, char *src, unsigned int n);
 
 #endif
