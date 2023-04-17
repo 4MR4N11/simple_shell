@@ -18,6 +18,7 @@ int	main(int ac, char **av, char **env)
 	{
 		args.buff = NULL;
 		args.cmd = NULL;
+		args.path = NULL;
 		args.env = env;
 		args.av = av;
 		while (1)
