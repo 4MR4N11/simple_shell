@@ -29,6 +29,8 @@ typedef struct args
 	char **av;
 	int words;
 	char **path;
+	int check;
+	int input_count;
 } args_t;
 
 void execute(args_t *args);
@@ -39,7 +41,7 @@ int _strncmp(char *s1, char *s2, int n);
 char *_strcpy(char *dest, char *src);
 int _strlen(char *s);
 char *_strcat(char *dest, char *src);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-char *_memcpy(char *dest, char *src, unsigned int n);
+void print_number(int n);
+void path_cmd_join(args_t *args);
 
 #endif

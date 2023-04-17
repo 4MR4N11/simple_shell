@@ -17,7 +17,11 @@ void execute(args_t *args)
 		error = execve(args->cmd[0], args->cmd, args->env);
 		if (error == -1)
 		{
-			perror(args->av[0]);
+			write(2, args->av[0], _strlen(args->av[0]));
+			write(2, ": ", 2);
+			print_number(args->input_count);
+			write(2, ": ", 2);
+			perror(args->cmd[0]);
 			exit(errno);
 		}
 	}

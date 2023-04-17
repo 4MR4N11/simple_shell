@@ -63,6 +63,45 @@ int words_counter(char *str, int c)
 	return (words);
 }
 
+void path_cmd_join(args_t *args)
+{
+	char *tmp;
+	int cmd_len = _strlen(args->cmd[0]);
+	int j = 0;
+
+	while (args->path[j])
+	{
+		tmp = malloc(sizeof(char) * cmd_len + _strlen(args->path[j]) + 1);
+		if (!tmp)
+		{
+			free(args->cmd);
+			free(args->buff);
+			perror(args->av[0]);
+			exit(EXIT_FAILURE);
+		}
+		_strcpy(tmp, args->path[j]);
+		_strcat(tmp, args->cmd[0]);
+		if (access(tmp, F_OK | X_OK) == 0)
+		{
+			args->check = 1;
+			args->cmd[0] = tmp;
+			return;
+		}
+		free(tmp);
+		j++;
+	}
+	if (_strncmp(args->cmd[0], "./", 2) == 0)
+	{
+		if (access(args->cmd[0], F_OK) == 0)
+		{
+			args->check = 1;
+			return;
+		}
+	}
+	args->check = 0;
+}
+
+
 /**
  * split_cmd - split the input into words
  * @args: arguments
@@ -70,8 +109,7 @@ int words_counter(char *str, int c)
 
 void split_cmd(args_t *args)
 {
-	int i, j = 0;
-	char *tmp;
+	int i;
 
 	i = 0;
 	if (args->buff)
@@ -82,6 +120,10 @@ void split_cmd(args_t *args)
 			args->cmd = NULL;
 		}
 		args->words = words_counter(args->buff, 1);
+		if (!args->words)
+		{
+			return;
+		}
 		args->cmd = malloc(sizeof(char *) * (args->words + 1));
 		if (!args->cmd)
 		{
@@ -90,23 +132,10 @@ void split_cmd(args_t *args)
 			exit(EXIT_FAILURE);
 		}
 		args->cmd[0] = strtok(args->buff, " \n\t");
-		tmp = malloc(sizeof(char) * _strlen(args->cmd[0]) + 1);
-		_strcpy(tmp, args->cmd[0]);
 		while (++i < args->words)
 			args->cmd[i] = strtok(NULL, " \n\t");
 		args->cmd[args->words] = NULL;
-		while (args->path[j])
-		{
-			args->cmd[0] = _realloc(args->cmd[0], _strlen(args->cmd[0]), _strlen(args->cmd[0]) + _strlen(args->path[j]) + 1);
-			_strcpy(args->cmd[0], args->path[j]);
-			_strcat(args->cmd[0], tmp);
-			if (access(args->cmd[0], F_OK) == 0)
-			{
-				return;
-			}
-
-			j++;
-		}
+		path_cmd_join(args);
 	}
 }
 
@@ -119,25 +148,28 @@ void split_path(args_t *args)
 	int i = 0, j = 0, words;
 	char *tmp;
 
-	while (args->env[i] != NULL)
+	if (!args->path)
 	{
-		if (_strncmp(args->env[i], "PATH", 4) == 0)
+		while (args->env[i] != NULL)
 		{
-			words = words_counter(args->env[i] + 5, 0);
-			args->path = malloc(sizeof(char *) * words + 1);
-			tmp = strtok(args->env[i] + 5, ":");
-			args->path[0] = malloc(sizeof(char *) * _strlen(tmp) + 2);
-			_strcpy(args->path[0], tmp);
-			_strcat(args->path[0], "/");
-			while (++j < words)
+			if (_strncmp(args->env[i], "PATH", 4) == 0)
 			{
-				tmp = strtok(NULL, ":");
-				args->path[j] = malloc(sizeof(char *) * _strlen(tmp) + 2);
-				_strcpy(args->path[j], tmp);
-				_strcat(args->path[j], "/");
+				words = words_counter(args->env[i] + 5, 0);
+				args->path = malloc(sizeof(char *) * words + 1);
+				tmp = strtok(args->env[i] + 5, ":");
+				args->path[0] = malloc(sizeof(char) * _strlen(tmp) + 2);
+				_strcpy(args->path[0], tmp);
+				_strcat(args->path[0], "/");
+				while (++j < words)
+				{
+					tmp = strtok(NULL, ":");
+					args->path[j] = malloc(sizeof(char) * _strlen(tmp) + 2);
+					_strcpy(args->path[j], tmp);
+					_strcat(args->path[j], "/");
+				}
+				args->path[words] = NULL;
 			}
-			args->path[words] = NULL;
+			i++;
 		}
-		i++;
 	}
 }
