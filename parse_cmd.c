@@ -1,31 +1,9 @@
 #include "main.h"
 
 /**
- * _strcmp -> function that compares two strings
- * @s1: pointer to string
- * @s2: pointer to string
- * Return: nothing
- */
-int _strncmp(char *s1, char *s2, int n)
-{
-	int i = 0;
-	int cmp = 0;
-
-	while ((i < n) && (s1[i] != '\0' || s2[i] != '\0'))
-	{
-		if (s1[i] != s2[i])
-		{
-			cmp = (s1[i] - s2[i]);
-			break;
-		}
-		i++;
-	}
-	return (cmp);
-}
-
-/**
  * words_counter - count words in a string
  * @str: string
+ * @c: 1 if the string is a command, 0 if it's a path
  * Return: number of words
 */
 
@@ -71,7 +49,7 @@ int words_counter(char *str, int c)
  */
 void path_cmd_join(args_t *args)
 {
-	char *tmp;
+	char *tmp = NULL;
 	int cmd_len = _strlen(args->cmd[0]);
 	int j = 0;
 
@@ -80,8 +58,7 @@ void path_cmd_join(args_t *args)
 		tmp = malloc(sizeof(char) * cmd_len + _strlen(args->path[j]) + 1);
 		if (!tmp)
 		{
-			free(args->cmd);
-			free(args->buff);
+			free_all(args);
 			perror(args->av[0]);
 			exit(EXIT_FAILURE);
 		}
@@ -127,13 +104,11 @@ void split_cmd(args_t *args)
 		}
 		args->words = words_counter(args->buff, 1);
 		if (!args->words)
-		{
 			return;
-		}
 		args->cmd = malloc(sizeof(char *) * (args->words + 1));
 		if (!args->cmd)
 		{
-			free(args->buff);
+			free_all(args);
 			perror(args->av[0]);
 			exit(EXIT_FAILURE);
 		}
@@ -162,14 +137,32 @@ void split_path(args_t *args)
 			{
 				words = words_counter(args->env[i] + 5, 0);
 				args->path = malloc(sizeof(char *) * words + 1);
+				if (!args->path)
+				{
+					free_all(args);
+					perror(args->av[0]);
+					exit(EXIT_FAILURE);
+				}
 				tmp = strtok(args->env[i] + 5, ":");
 				args->path[0] = malloc(sizeof(char) * _strlen(tmp) + 2);
+				if (!args->path[0])
+				{
+					free_all(args);
+					perror(args->av[0]);
+					exit(EXIT_FAILURE);
+				}
 				_strcpy(args->path[0], tmp);
 				_strcat(args->path[0], "/");
 				while (++j < words)
 				{
 					tmp = strtok(NULL, ":");
 					args->path[j] = malloc(sizeof(char) * _strlen(tmp) + 2);
+					if (!args->path[j])
+					{
+						free_all(args);
+						perror(args->av[0]);
+						exit(EXIT_FAILURE);
+					}
 					_strcpy(args->path[j], tmp);
 					_strcat(args->path[j], "/");
 				}

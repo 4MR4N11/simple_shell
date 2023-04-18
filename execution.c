@@ -22,6 +22,7 @@ void execute(args_t *args)
 			print_number(args->input_count);
 			write(2, ": ", 2);
 			perror(args->cmd[0]);
+			free_all(args);
 			exit(errno);
 		}
 	}
@@ -30,8 +31,7 @@ void execute(args_t *args)
 		wait(&status);
 		if (!isatty(STDIN_FILENO))
 		{
-			free(args->buff);
-			free(args->cmd);
+			free_all(args);
 			exit(0);
 		}
 		fflush(stdout);

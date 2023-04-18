@@ -28,7 +28,7 @@ int	main(int ac, char **av, char **env)
 			args.read_check = getline(&args.buff, &args.len, stdin);
 			if (args.read_check == -1)
 			{
-				free(args.buff);
+				free_all(&args);
 				if (!errno)
 					exit(EXIT_SUCCESS);
 				perror(av[0]);
@@ -36,18 +36,21 @@ int	main(int ac, char **av, char **env)
 			}
 			split_path(&args);
 			split_cmd(&args);
-			if (args.check)
-				execute(&args);
-			else
+			if (!check_builtin(&args))
 			{
-				if (args.buff[0] != '\n')
+				if (args.check)
+					execute(&args);
+				else
 				{
-					write(2, av[0], _strlen(av[0]));
-					write(2, ": ", 2);
-					print_number(args.input_count);
-					write(2, ": ", 2);
-					write(2, args.cmd[0], _strlen(args.cmd[0]));
-					write(2, ": not found\n", 12);
+					if (args.buff[0] != '\n')
+					{
+						write(2, av[0], _strlen(av[0]));
+						write(2, ": ", 2);
+						print_number(args.input_count);
+						write(2, ": ", 2);
+						write(2, args.cmd[0], _strlen(args.cmd[0]));
+						write(2, ": not found\n", 12);
+					}
 				}
 			}
 			args.input_count++;

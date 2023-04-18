@@ -18,6 +18,9 @@
  * @read_check: read check value
  * @av: the arguments
  * @words: number of words in the command
+ * @path: path directories
+ * @check: check value for execve
+ * @input_count: number of inputs
  */
 typedef struct args
 {
@@ -43,5 +46,9 @@ int _strlen(char *s);
 char *_strcat(char *dest, char *src);
 void print_number(int n);
 void path_cmd_join(args_t *args);
+void b_exit(args_t *args);
+void free_all(args_t *args);
+int _strcmp(char *s1, char *s2);
+int check_builtin(args_t *args);
 
 #endif
