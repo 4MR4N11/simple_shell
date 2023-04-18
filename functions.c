@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * divider_len - Calculates the length of an integer by dividing it by 10
+ * @n: The integer to calculate the length of
+ *
+ * Return: The length of the integer
+ */
 int divider_len(int n)
 {
 	int i;
@@ -13,6 +19,12 @@ int divider_len(int n)
 	return (i);
 }
 
+/**
+ * print_number - Prints an integer to stdout
+ * @n: The integer to be printed
+ *
+ * Return: void
+ */
 void print_number(int n)
 {
 	int tmp, l;

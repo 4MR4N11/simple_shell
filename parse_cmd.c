@@ -63,6 +63,12 @@ int words_counter(char *str, int c)
 	return (words);
 }
 
+/**
+ * path_cmd_join - joins the command with each directory in the path
+ * @args: pointer to a struct containing command and path information
+ *
+ * Return: void
+ */
 void path_cmd_join(args_t *args)
 {
 	char *tmp;
