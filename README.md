@@ -34,14 +34,14 @@ The shell can be run in interactive mode with the following command:
 ```
 ./hsh
 ```
-![alt text](screenshots/1.png)
+![alt text](screenshots/one.png)
 
 The shell can be run in non-interactive mode with the following command:
 
 ```
 echo "command" | ./hsh
 ```
-![alt text](screenshots/2.png)
+![alt text](screenshots/two.png)
 ## Authors
 
 See [AUTHORS](./AUTHORS) for more information.
