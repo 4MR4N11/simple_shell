@@ -7,7 +7,8 @@ This repository contains an implementation of a simple UNIX command interpreter 
 The simple_shell is able to:
 
 * Execute commands in interactive and non-interactive mode
-* Handle command line arguments
+* Execute commands with arguments
+* Execute commands with and without the PATH
 
 ## File structure
 
@@ -17,6 +18,8 @@ The repository contains the following files:
 - `main.c`: Contains the main loop of the shell.
 - `parse_cmd.c`: Contains the function that parses the command line.
 - `execution.c`: Contains the functions that execute the commands.
+- `functions1.c`: Contains some utils functions.
+- `functions2.c`: Contains some utils functions.
 
 ## Usage
 

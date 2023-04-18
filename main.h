@@ -21,6 +21,7 @@
  * @path: path directories
  * @check: check value for execve
  * @input_count: number of inputs
+ * @tmp: temporary string
  */
 typedef struct args
 {
@@ -34,6 +35,7 @@ typedef struct args
 	char **path;
 	int check;
 	int input_count;
+	char *tmp;
 } args_t;
 
 void execute(args_t *args);

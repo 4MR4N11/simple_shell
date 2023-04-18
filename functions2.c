@@ -59,6 +59,11 @@ void free_all(args_t *args)
 	int i;
 
 	i = 0;
+	if (args->tmp)
+	{
+		free(args->tmp);
+		args->tmp = NULL;
+	}
 	if (args->buff)
 	{
 		free(args->buff);
