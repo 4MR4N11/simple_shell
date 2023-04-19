@@ -52,5 +52,6 @@ void b_exit(args_t *args);
 void free_all(args_t *args);
 int _strcmp(char *s1, char *s2);
 int check_builtin(args_t *args);
+void builtin(args_t *args);
 
 #endif
