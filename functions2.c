@@ -101,9 +101,9 @@ int check_builtin(args_t *args)
 		return (1);
 	}
 	if (_strcmp(args->cmd[0], "env") == 0)
-        {
-                builtin(args);
-                return (1);
-        }
+	{
+		builtin(args);
+		return (1);
+	}
 	return (0);
 }
