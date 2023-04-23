@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <stdlib.h>
 #include <sys/wait.h>
+#include <signal.h>
 #include <errno.h>
 
 #define BUFFSIZE 120
@@ -23,6 +24,7 @@
  * @check: check value for execve
  * @input_count: number of inputs
  * @tmp: temporary string
+ * @errno_value: errno value to exit
  */
 typedef struct args
 {
@@ -37,6 +39,7 @@ typedef struct args
 	int check;
 	int input_count;
 	char *tmp;
+	int errno_value;
 } args_t;
 
 void execute(args_t *args);

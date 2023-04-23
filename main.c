@@ -1,6 +1,17 @@
 #include "main.h"
 
 /**
+ * sig_handler - Handles the signal.
+ * @sig: The signal.
+*/
+
+void sig_handler(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	write(1, "\033[38;2;0;63;92msimple_shell$\033[0m ", 33);
+}
+/**
  * read_and_execute - Reads and executes the command.
  * (I split the main function to respect betty's syntax style)
  * @args: The arguments struct.
@@ -11,11 +22,12 @@ void read_and_execute(args_t *args)
 	args->read_check = getline(&args->buff, &args->len, stdin);
 	if (args->read_check == -1)
 	{
+		errno = args->errno_value;
 		free_all(args);
+
 		if (!errno)
 			exit(EXIT_SUCCESS);
-		perror(args->av[0]);
-		exit(EXIT_FAILURE);
+		exit(errno);
 	}
 	split_path(args);
 	split_cmd(args);
@@ -33,6 +45,7 @@ void read_and_execute(args_t *args)
 				write(2, ": ", 2);
 				write(2, args->cmd[0], _strlen(args->cmd[0]));
 				write(2, ": not found\n", 12);
+				args->errno_value = 127;
 			}
 		}
 	}
@@ -61,6 +74,11 @@ int	main(int ac, char **av, char **env)
 		args.len = 0;
 		args.env = env;
 		args.av = av;
+		if (signal(SIGINT, sig_handler) == SIG_ERR)
+		{
+			perror("Can't catch SIGINT");
+			exit(EXIT_FAILURE);
+		}
 		while (1)
 		{
 			if (isatty(STDIN_FILENO))

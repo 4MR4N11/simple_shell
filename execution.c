@@ -11,6 +11,7 @@ void execute(args_t *args)
 	int status;
 	int error;
 
+	args->errno_value = 0;
 	id = fork();
 	if (id == 0)
 	{
@@ -23,12 +24,14 @@ void execute(args_t *args)
 			write(2, ": ", 2);
 			perror(args->cmd[0]);
 			free_all(args);
-			exit(errno);
+			exit(126);
 		}
 	}
 	if (id > 0)
 	{
 		wait(&status);
+		if (WIFEXITED(status))
+			args->errno_value = WEXITSTATUS(status);
 		if (!isatty(STDIN_FILENO))
 		{
 			free_all(args);

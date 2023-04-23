@@ -95,6 +95,8 @@ void free_all(args_t *args)
 
 int check_builtin(args_t *args)
 {
+	if (args->cmd == NULL)
+		return (1);
 	if (_strcmp(args->cmd[0], "exit") == 0)
 	{
 		b_exit(args);

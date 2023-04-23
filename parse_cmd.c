@@ -74,6 +74,7 @@ void path_cmd_join(args_t *args)
 			args->cmd[0] = args->tmp;
 			return;
 		}
+		errno = 0;
 		free(args->tmp);
 		args->tmp = NULL;
 		j++;
@@ -85,6 +86,7 @@ void path_cmd_join(args_t *args)
 			args->check = 1;
 			return;
 		}
+		errno = 0;
 	}
 	args->check = 0;
 }
