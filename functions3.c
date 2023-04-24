@@ -66,3 +66,40 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	free(ptr);
 	return (new_ptr);
 }
+
+char *_strtok(char *str, const char *delim)
+{
+	static char *last;
+	char *token = NULL;
+
+	if (str != NULL)
+	{
+		last = str;
+	}
+	else
+	{
+		if (last == NULL)
+		{
+			return (NULL);
+		}
+		str = last;
+	}
+	str += _strspn(str, delim);
+	if (*str == '\0')
+	{
+		last = NULL;
+		return (NULL);
+	}
+	token = str;
+	str = _strpbrk(token, delim);
+	if (str == NULL)
+	{
+		last = NULL;
+	}
+	else
+	{
+		*str = '\0';
+		last = str + 1;
+	}
+	return (token);
+}
