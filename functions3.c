@@ -67,6 +67,33 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	return (new_ptr);
 }
 
+size_t _strspn(const char *str1, const char *str2)
+{
+	size_t count = 0;
+	const char *ptr1 = str1;
+
+	while (*ptr1 != '\0')
+	{
+		const char *ptr2 = str2;
+
+		while (*ptr2 != '\0')
+		{
+			if (*ptr1 == *ptr2)
+			{
+				count++;
+				break;
+			}
+			ptr2++;
+		}
+		if (*ptr2 == '\0')
+		{
+			return (count);
+		}
+		ptr1++;
+	}
+	return (count);
+}
+
 char *_strtok(char *str, const char *delim)
 {
 	static char *last;
