@@ -131,7 +131,14 @@ size_t _strspn(const char *str1, const char *str2)
 	}
 	return (count);
 }
-
+/**
+ * _strtok - extracts tokens from strings.
+ *
+ * @str: The string to be searched.
+ * @delim: The delimiter characters.
+ *
+ * Return: A pointer to the next token, or NULL if there are no more tokens.
+ */
 char *_strtok(char *str, const char *delim)
 {
 	static char *last;
