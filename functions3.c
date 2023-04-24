@@ -85,7 +85,7 @@ char *_strpbrk(const char *str1, const char *str2)
 
 		while (*ptr2 != '\0')
 		{
-			if (*ptr1 != *ptr2)
+			if (*ptr1 == *ptr2)
 			{
 				return ((char *)ptr1);
 			}
