@@ -66,7 +66,15 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	free(ptr);
 	return (new_ptr);
 }
-
+/**
+ * _strpbrk - searches a string for any of a set of bytes.
+ *
+ * @str1: The string to search.
+ * @str2: The characters to match.
+ *
+ * Return: A pointer to the byte in @str1 that matches one of the bytes in @str2,
+ *         or NULL if no such byte is found.
+ */
 char *_strpbrk(const char *str1, const char *str2)
 {
 	const char *ptr1 = str1;
@@ -87,7 +95,16 @@ char *_strpbrk(const char *str1, const char *str2)
 	}
 	return (NULL);
 }
-
+/**
+ * _strspn - calculates the length of the initial segment of @str1 which
+ * consists entirely of bytes from @str2.
+ *
+ * @str1: The string to be searched.
+ * @str2: The characters that @str1 is checked for matching.
+ *
+ * Return: The number of bytes in the initial segment of @str1 which
+ *         consist only of bytes from @str2.
+ */
 size_t _strspn(const char *str1, const char *str2)
 {
 	size_t count = 0;
