@@ -59,5 +59,8 @@ int check_builtin(args_t *args);
 void builtin(args_t *args);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+char *_strpbrk(const char *str1, const char *str2);
+size_t _strspn(const char *str1, const char *str2);
+char *_strtok(char *str, const char *delim);
 
 #endif
