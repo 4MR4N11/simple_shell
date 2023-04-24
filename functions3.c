@@ -67,6 +67,27 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	return (new_ptr);
 }
 
+char *_strpbrk(const char *str1, const char *str2)
+{
+	const char *ptr1 = str1;
+
+	while (*ptr1 != '\0')
+	{
+		const char *ptr2 = str2;
+
+		while (*ptr2 != '\0')
+		{
+			if (*ptr1 != *ptr2)
+			{
+				return ((char *)ptr1);
+			}
+			ptr2++;
+		}
+		ptr1++;
+	}
+	return (NULL);
+}
+
 size_t _strspn(const char *str1, const char *str2)
 {
 	size_t count = 0;
