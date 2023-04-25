@@ -89,6 +89,6 @@ int	main(int ac, char **av, char **env)
 		free_all(&args);
 	}
 	else
-		printf("Usage: ./hsh\n");
+		write(2, "Usage: ./hsh\n", 13);
 	return (EXIT_FAILURE);
 }
