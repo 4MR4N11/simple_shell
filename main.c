@@ -74,6 +74,7 @@ int	main(int ac, char **av, char **env)
 		args.len = 0;
 		args.env = env;
 		args.av = av;
+		args.errno_value = 0;
 		if (signal(SIGINT, sig_handler) == SIG_ERR)
 		{
 			perror("Can't catch SIGINT");
