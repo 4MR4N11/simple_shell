@@ -35,7 +35,8 @@ void execute(args_t *args)
 		if (!isatty(STDIN_FILENO))
 		{
 			free_all(args);
-			exit(0);
+			errno = args->errno_value;
+			exit(errno);
 		}
 		fflush(stdout);
 	}
