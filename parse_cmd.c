@@ -52,7 +52,7 @@ void path_cmd_join(args_t *args)
 	int cmd_len = _strlen(args->cmd[0]);
 	int j = 0;
 
-	if (access(args->cmd[0], F_OK | X_OK) == 0)
+	if (access(args->cmd[0], F_OK) == 0)
 	{
 		args->check = 1;
 		return;
@@ -68,7 +68,7 @@ void path_cmd_join(args_t *args)
 		}
 		_strcpy(args->tmp, args->path[j]);
 		_strcat(args->tmp, args->cmd[0]);
-		if (access(args->tmp, F_OK | X_OK) == 0)
+		if (access(args->tmp, F_OK) == 0)
 		{
 			args->check = 1;
 			args->cmd[0] = args->tmp;
