@@ -31,7 +31,7 @@ void *_memcpy(void *dest, const void *src, int n)
 /**
  * _realloc - reallocates a memory block using malloc and free.
  * The contents will be copied to the newly allocated space.
- * @ptr: pointer to the memory previously allocated with a call to malloc.
+ * @ptr: pointer to the memory previously allocated.
  * @old_size: the size, in bytes, of the allocated space for ptr.
  * @new_size: the new size, in bytes of the new memory block.
  * Return: new pointer to the new created memory area.
@@ -72,8 +72,8 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  * @str1: The string to search.
  * @str2: The characters to match.
  *
- * Return: A pointer to the byte in @str1 that matches one of the bytes in @str2,
- *         or NULL if no such byte is found.
+ * Return: A pointer to the byte in @str1 that matches one of
+ * the bytes in @str2 or NULL if no such byte is found.
  */
 char *_strpbrk(const char *str1, const char *str2)
 {
