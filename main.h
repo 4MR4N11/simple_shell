@@ -42,6 +42,8 @@ typedef struct args
 	int errno_value;
 } args_t;
 
+extern char **environ;
+
 void execute(args_t *args);
 int words_counter(char *str, int c);
 void split_cmd(args_t *args);
@@ -60,7 +62,5 @@ void builtin(void);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 char *_strdup(char *str);
-
-extern char **environ;
 
 #endif
