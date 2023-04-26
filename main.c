@@ -35,6 +35,7 @@ void read_and_execute(args_t *args)
 			exit(EXIT_SUCCESS);
 		exit(errno);
 	}
+	split_path(args);
 	split_cmd(args);
 	if (!check_builtin(args))
 	{
@@ -85,7 +86,6 @@ int	main(int ac, char **av, char **env)
 			perror("Can't catch SIGINT");
 			exit(EXIT_FAILURE);
 		}
-		split_path(&args);
 		while (1)
 		{
 			if (isatty(STDIN_FILENO))

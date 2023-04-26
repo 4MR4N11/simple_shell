@@ -9,7 +9,6 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <errno.h>
-#include <fcntl.h>
 
 #define BUFFSIZE 120
 /**
@@ -57,19 +56,13 @@ void b_exit(args_t *args);
 void free_all(args_t *args);
 int _strcmp(char *s1, char *s2);
 int check_builtin(args_t *args);
-void builtin(void);
+void builtin(args_t *args);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 char *_strpbrk(const char *str1, const char *str2);
 size_t _strspn(const char *str1, const char *str2);
 char *_strtok(char *str, const char *delim);
 char *_strdup(char *str);
-char *_substr(char const *s, unsigned int start, size_t len);
-char *_strtrim(char const *s1, char const *set);
-char *grep_path(char **env);
-char *trim_path(char *env);
-int get_env(args_t *args, char *path);
-int cmd_fullpath(args_t *args);
 
 extern char **environ;
 
