@@ -2,12 +2,12 @@
 #include "main.h"
 
 /**
- * _memcpy - copy n number of bytes from src to dest.
- * @dest: pointer to the destination.
- * @src: pointer to the source.
- * @n: number of bytes to copy.
- * Return: @dest.
- */
+ * _memcpy - Copies n bytes from memory area src to memory area dest
+ * @dest: Pointer to the destination array where the content is to be copied
+ * @src: Pointer to the source of data to be copied
+ * @n: Number of bytes to be copied
+ * Return: Pointer to the destination array
+*/
 
 void *_memcpy(void *dest, const void *src, int n)
 {
