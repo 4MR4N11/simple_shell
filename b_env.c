@@ -7,7 +7,6 @@
  */
 void builtin(void)
 {
-	extern char **environ;
 	char **ev;
 
 	for (ev = environ; *ev != NULL; ev++)

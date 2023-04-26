@@ -68,4 +68,6 @@ char *_strtrim(char const *s1, char const *set);
 char *grep_path(char **env);
 char *trim_path(char *env);
 
+extern char **environ;
+
 #endif

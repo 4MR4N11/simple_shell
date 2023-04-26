@@ -58,15 +58,48 @@ void read_and_execute(args_t *args)
 }
 
 /**
+ * get_env - Gets the environment variables.
+ * @args: The arguments struct.
+*/
+
+void get_env(args_t *args)
+{
+	int i;
+
+	i = 0;
+	while (environ[i])
+		i++;
+	args->env = malloc(sizeof(char *) * (i + 1));
+	if (!args->env)
+	{
+		perror("Error malloc");
+		free_all(args);
+		exit(EXIT_FAILURE);
+	}
+	i = 0;
+	while (environ[i])
+	{
+		args->env[i] = _strdup(environ[i]);
+		if (!args->env[i])
+		{
+			perror("Error malloc");
+			free_all(args);
+			exit(EXIT_FAILURE);
+		}
+		i++;
+	}
+	args->env[i] = NULL;
+}
+
+/**
  * main - entry point.
  * Description: simple shell.
  * @ac: Number of arguments.
  * @av: The arguments.
- * @env: The environment variables.
  * Return: 1 if ac != 1.
 */
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av)
 {
 	args_t args;
 
@@ -78,7 +111,7 @@ int	main(int ac, char **av, char **env)
 		args.path = NULL;
 		args.cmd = NULL;
 		args.len = 0;
-		args.env = env;
+		args.env = NULL;
 		args.av = av;
 		args.errno_value = 0;
 		if (signal(SIGINT, sig_handler) == SIG_ERR)
