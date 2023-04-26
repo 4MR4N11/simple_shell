@@ -68,6 +68,7 @@ char *_substr(char const *s, unsigned int start, size_t len);
 char *_strtrim(char const *s1, char const *set);
 char *grep_path(char **env);
 char *trim_path(char *env);
+int get_env(args_t *args, char *path);
 
 extern char **environ;
 

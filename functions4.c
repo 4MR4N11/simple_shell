@@ -96,3 +96,30 @@ char *trim_path(char *env)
 	path = _strtrim(env, "PATH=");
 	return (path);
 }
+
+/**
+ * get_env - gets the index of an environment variable
+ * @args: pointer to a struct containing command and path information
+ * @path: pointer to the environment variable to search for
+ * Return: index of the environment variable, or -1 if not found
+*/
+int get_env(args_t *args, char *path)
+{
+	int i, j;
+
+	i = 0;
+	while (args->env[i])
+	{
+		j = 0;
+		while (args->env[i][j] && args->env[i][j] != '=')
+		{
+			if (args->env[i][j] != path[j] && path[j] != '\0')
+				break;
+			else if (args->env[i][j + 1] == '=' && path[j + 1] == '\0')
+				return (i);
+			j++;
+		}
+		i++;
+	}
+	return (-1);
+}

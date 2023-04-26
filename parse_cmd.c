@@ -155,39 +155,36 @@ void split_path(args_t *args)
 
 	if (!args->path)
 	{
-		while (args->env[i] != NULL)
+		i = get_env(args, "PATH\0");
+		if (i != -1)
 		{
-			if (_strncmp(args->env[i], "PATH=", 5) == 0)
+			path = trim_path(args->env[i]);
+			words = words_counter(path, 0);
+			args->path = malloc(sizeof(char *) * (words + 1));
+			if (!args->path)
+				malloc_error(args, path);
+			tmp = strtok(path, ":");
+			args->path[++j] = malloc(sizeof(char) * (_strlen(tmp) + 2));
+			if (!args->path[j])
+				malloc_error(args, path);
+			_strcpy(args->path[j], tmp);
+			_strcat(args->path[j], "/");
+			while (++j < words)
 			{
-				path = trim_path(args->env[i]);
-				words = words_counter(path, 0);
-				args->path = malloc(sizeof(char *) * (words + 1));
-				if (!args->path)
-					malloc_error(args, path);
-				tmp = strtok(path, ":");
-				args->path[++j] = malloc(sizeof(char) * (_strlen(tmp) + 2));
+				tmp = strtok(NULL, ":");
+				args->path[j] = malloc(sizeof(char) * (_strlen(tmp) + 2));
 				if (!args->path[j])
-					malloc_error(args, path);
+				{
+					free(path);
+					free_all(args);
+					perror(args->av[0]);
+					exit(EXIT_FAILURE);
+				}
 				_strcpy(args->path[j], tmp);
 				_strcat(args->path[j], "/");
-				while (++j < words)
-				{
-					tmp = strtok(NULL, ":");
-					args->path[j] = malloc(sizeof(char) * (_strlen(tmp) + 2));
-					if (!args->path[j])
-					{
-						free(path);
-						free_all(args);
-						perror(args->av[0]);
-						exit(EXIT_FAILURE);
-					}
-					_strcpy(args->path[j], tmp);
-					_strcat(args->path[j], "/");
-				}
-				args->path[words] = NULL;
-				free(path);
 			}
-			i++;
+			args->path[words] = NULL;
+			free(path);
 		}
 	}
 }
