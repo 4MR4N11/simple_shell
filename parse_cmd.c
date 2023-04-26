@@ -154,7 +154,7 @@ void split_path(args_t *args)
 	{
 		while (args->env[i] != NULL)
 		{
-			if (_strncmp(args->env[i], "PATH", 4) == 0)
+			if (_strncmp(args->env[i], "PATH=", 5) == 0)
 			{
 				words = words_counter(args->env[i] + 5, 0);
 				args->path = malloc(sizeof(char *) * (words + 1));
