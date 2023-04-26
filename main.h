@@ -56,7 +56,7 @@ void b_exit(args_t *args);
 void free_all(args_t *args);
 int _strcmp(char *s1, char *s2);
 int check_builtin(args_t *args);
-void builtin(args_t *args);
+void builtin(void);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 char *_strpbrk(const char *str1, const char *str2);
