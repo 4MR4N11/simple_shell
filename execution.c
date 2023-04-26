@@ -1,16 +1,6 @@
 #include "main.h"
 
 /**
- * error_message - prints error message
- * @args: arguments
-*/
-
-void error_message(args_t *args)
-{
-	write(2, args->cmd_args[0], _strlen(args->cmd_args[0]));
-	write(2, ": Permission denied\n", 20);
-}
-/**
  * execute - execute a command
  * @args: arguments
 */
@@ -38,10 +28,7 @@ void execute(args_t *args)
 			write(2, ": ", 2);
 			print_number(args->input_count);
 			write(2, ": ", 2);
-			if (_strncmp(args->cmd_args[0], "./", 2) == 0)
-				error_message(args);
-			else
-				perror(args->cmd_args[0]);
+			perror(args->cmd_args[0]);
 			free_all(args);
 			exit(126);
 		}
