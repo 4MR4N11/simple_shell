@@ -20,6 +20,7 @@ The repository contains the following files:
 - `execution.c`: Contains the functions that execute the commands.
 - `functions1.c`: Contains some utils functions.
 - `functions2.c`: Contains some utils functions.
+- `functions3.c`: Contains some utils functions.
 
 ## Usage
 
