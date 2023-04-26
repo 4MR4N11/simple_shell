@@ -32,11 +32,12 @@ int malloc_or_realloc(char **line, ssize_t i, size_t **n)
 }
 
 /**
- * _getline - reads an entire line from a file descriptor
- * @lineptr: pointer to a string
- * @n: size of the buffer
- * @stream: file descriptor
- * Return: number of characters read
+ * _getline - reads an entire line from stream
+ * @lineptr: pointer to a buffer to store the line read
+ * @n: pointer to the size of the buffer
+ * @stream: stream to read from
+ * Return: number of characters read, including the delimiter
+ *         -1 on failure or end of file
  */
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
