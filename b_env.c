@@ -7,13 +7,11 @@
  */
 void builtin(void)
 {
-	int i;
+	char **ev;
 
-	if (!environ)
-		return;
-	for (i = 0; environ[i]; i++)
+	for (ev = environ; *ev != NULL; ev++)
 	{
-		write(STDOUT_FILENO, environ[i], _strlen(environ[i]));
+		write(STDOUT_FILENO, *ev, _strlen(*ev));
 		write(STDOUT_FILENO, "\n", 1);
 	}
 }
