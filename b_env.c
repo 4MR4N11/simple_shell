@@ -2,15 +2,15 @@
 
 /**
  * builtin - print the current environment
- * @args: pointer to args_t structure
  *
  * Return: none
  */
-void builtin(args_t *args)
+void builtin(void)
 {
+	extern char **environ;
 	char **ev;
 
-	for (ev = args->env; *ev != NULL; ev++)
+	for (ev = environ; *ev != NULL; ev++)
 	{
 		write(STDOUT_FILENO, *ev, _strlen(*ev));
 		write(STDOUT_FILENO, "\n", 1);
