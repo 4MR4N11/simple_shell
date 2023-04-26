@@ -75,7 +75,7 @@ int _strlen(char *s)
  * _strcpy - function that copies the string pointed to by src
  * @src: pointer to string
  * @dest: pointer to string
- * Return: dest.
+ * Return: dest
  */
 char *_strcpy(char *dest, char *src)
 {
