@@ -119,6 +119,7 @@ int	main(int ac, char **av)
 			perror("Can't catch SIGINT");
 			exit(EXIT_FAILURE);
 		}
+		get_env(&args);
 		while (1)
 		{
 			if (isatty(STDIN_FILENO))
