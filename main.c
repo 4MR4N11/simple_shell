@@ -58,11 +58,10 @@ void read_and_execute(args_t *args)
 }
 
 /**
- * main - entry point.
- * Description: simple shell.
- * @ac: Number of arguments.
- * @av: The arguments.
- * @env: The environment variables.
+ * main - entry point to the shell program
+ * @ac: number of arguments passed to the program
+ * @av: array of strings containing the arguments
+ * @env: array of strings containing the environment variables
  * Return: 1 if ac != 1.
 */
 
