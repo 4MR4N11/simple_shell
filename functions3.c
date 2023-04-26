@@ -29,13 +29,12 @@ void *_memcpy(void *dest, const void *src, int n)
 }
 
 /**
- * _realloc - reallocates a memory block using malloc and free.
- * The contents will be copied to the newly allocated space.
- * @ptr: pointer to the memory previously allocated.
- * @old_size: the size, in bytes, of the allocated space for ptr.
- * @new_size: the new size, in bytes of the new memory block.
- * Return: new pointer to the new created memory area.
- * NULL if it fails.
+ * _realloc - Reallocates a memory block using malloc and free
+ * @ptr: Pointer to the memory previously allocated
+ * @old_size: Size of the allocated space for `ptr`
+ * @new_size: New size of the memory block to allocate
+ *
+ * Return: Pointer to the newly allocated memory block, or NULL if failed
  */
 
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
