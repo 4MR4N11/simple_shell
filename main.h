@@ -63,5 +63,9 @@ char *_strpbrk(const char *str1, const char *str2);
 size_t _strspn(const char *str1, const char *str2);
 char *_strtok(char *str, const char *delim);
 char *_strdup(char *str);
+char *_substr(char const *s, unsigned int start, size_t len);
+char *_strtrim(char const *s1, char const *set);
+char *grep_path(char **env);
+char *trim_path(char *env);
 
 #endif

@@ -132,10 +132,13 @@ void split_cmd(args_t *args)
 /**
  * malloc_error - prints an error message and exits the program
  * @args: arguments
+ * @path: path
 */
 
-void malloc_error(args_t *args)
+void malloc_error(args_t *args, char *path)
 {
+	if (path)
+		free(path);
 	free_all(args);
 	perror(args->av[0]);
 	exit(EXIT_FAILURE);
@@ -148,7 +151,7 @@ void malloc_error(args_t *args)
 void split_path(args_t *args)
 {
 	int i = 0, j = -1, words;
-	char *tmp;
+	char *tmp, *path = NULL;
 
 	if (!args->path)
 	{
@@ -156,14 +159,15 @@ void split_path(args_t *args)
 		{
 			if (_strncmp(args->env[i], "PATH=", 5) == 0)
 			{
-				words = words_counter(args->env[i] + 5, 0);
+				path = trim_path(args->env[i]);
+				words = words_counter(path, 0);
 				args->path = malloc(sizeof(char *) * (words + 1));
 				if (!args->path)
-					malloc_error(args);
-				tmp = strtok(args->env[i] + 5, ":");
+					malloc_error(args, path);
+				tmp = strtok(path, ":");
 				args->path[++j] = malloc(sizeof(char) * (_strlen(tmp) + 2));
 				if (!args->path[j])
-					malloc_error(args);
+					malloc_error(args, path);
 				_strcpy(args->path[j], tmp);
 				_strcat(args->path[j], "/");
 				while (++j < words)
@@ -172,6 +176,7 @@ void split_path(args_t *args)
 					args->path[j] = malloc(sizeof(char) * (_strlen(tmp) + 2));
 					if (!args->path[j])
 					{
+						free(path);
 						free_all(args);
 						perror(args->av[0]);
 						exit(EXIT_FAILURE);
@@ -180,6 +185,7 @@ void split_path(args_t *args)
 					_strcat(args->path[j], "/");
 				}
 				args->path[words] = NULL;
+				free(path);
 			}
 			i++;
 		}
