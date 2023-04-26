@@ -22,6 +22,12 @@ void read_and_execute(args_t *args)
 	args->read_check = getline(&args->buff, &args->len, stdin);
 	if (args->read_check == -1)
 	{
+		if (!isatty(STDIN_FILENO))
+		{
+			free_all(args);
+			errno = args->errno_value;
+			exit(errno);
+		}
 		errno = args->errno_value;
 		free_all(args);
 

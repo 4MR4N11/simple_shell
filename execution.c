@@ -13,6 +13,12 @@ void execute(args_t *args)
 
 	args->errno_value = 0;
 	id = fork();
+	if (id == -1)
+	{
+		perror("Error fork:");
+		free_all(args);
+		exit(EXIT_FAILURE);
+	}
 	if (id == 0)
 	{
 		error = execve(args->cmd, args->cmd_args, args->env);
@@ -32,12 +38,5 @@ void execute(args_t *args)
 		wait(&status);
 		if (WIFEXITED(status))
 			args->errno_value = WEXITSTATUS(status);
-		if (!isatty(STDIN_FILENO))
-		{
-			free_all(args);
-			errno = args->errno_value;
-			exit(errno);
-		}
-		fflush(stdout);
 	}
 }
