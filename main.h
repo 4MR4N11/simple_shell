@@ -10,6 +10,7 @@
 #include <signal.h>
 #include <errno.h>
 
+#define BUFFSIZE 120
 /**
  * struct args - all used arguments and variables.
  * @cmd_args: command with arguments
