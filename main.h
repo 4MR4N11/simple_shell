@@ -69,6 +69,7 @@ char *_strtrim(char const *s1, char const *set);
 char *grep_path(char **env);
 char *trim_path(char *env);
 int get_env(args_t *args, char *path);
+int cmd_fullpath(args_t *args);
 
 extern char **environ;
 

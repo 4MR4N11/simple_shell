@@ -52,12 +52,6 @@ void path_cmd_join(args_t *args)
 	int cmd_len = _strlen(args->cmd_args[0]);
 	int j = 0;
 
-	if (access(args->cmd_args[0], F_OK) == 0)
-	{
-		args->cmd = _strdup(args->cmd_args[0]);
-		args->check = 1;
-		return;
-	}
 	while (args->path[j])
 	{
 		args->cmd = malloc(sizeof(char) * cmd_len + _strlen(args->path[j]) + 1);
@@ -79,15 +73,8 @@ void path_cmd_join(args_t *args)
 		args->cmd = NULL;
 		j++;
 	}
-	if (_strncmp(args->cmd_args[0], "./", 2) == 0)
-	{
-		if (access(args->cmd_args[0], F_OK) == 0)
-		{
-			args->check = 1;
-			return;
-		}
-		errno = 0;
-	}
+	if (cmd_fullpath(args) == 0)
+		return;
 	args->check = 0;
 }
 
