@@ -43,7 +43,7 @@ void read_and_execute(args_t *args)
 				write(2, ": ", 2);
 				print_number(args->input_count);
 				write(2, ": ", 2);
-				write(2, args->cmd[0], _strlen(args->cmd[0]));
+				write(2, args->cmd_args[0], _strlen(args->cmd_args[0]));
 				write(2, ": not found\n", 12);
 				args->errno_value = 127;
 			}
@@ -68,9 +68,9 @@ int	main(int ac, char **av, char **env)
 	if (ac == 1)
 	{
 		args.buff = NULL;
-		args.cmd = NULL;
+		args.cmd_args = NULL;
 		args.path = NULL;
-		args.tmp = NULL;
+		args.cmd = NULL;
 		args.len = 0;
 		args.env = env;
 		args.av = av;

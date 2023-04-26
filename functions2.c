@@ -59,20 +59,20 @@ void free_all(args_t *args)
 	int i;
 
 	i = 0;
-	if (args->tmp)
+	if (args->cmd)
 	{
-		free(args->tmp);
-		args->tmp = NULL;
+		free(args->cmd);
+		args->cmd = NULL;
 	}
 	if (args->buff)
 	{
 		free(args->buff);
 		args->buff = NULL;
 	}
-	if (args->cmd)
+	if (args->cmd_args)
 	{
-		free(args->cmd);
-		args->cmd = NULL;
+		free(args->cmd_args);
+		args->cmd_args = NULL;
 	}
 	if (args->path)
 	{
@@ -95,17 +95,42 @@ void free_all(args_t *args)
 
 int check_builtin(args_t *args)
 {
-	if (args->cmd == NULL)
+	if (args->cmd_args == NULL)
 		return (1);
-	if (_strcmp(args->cmd[0], "exit") == 0)
+	if (_strcmp(args->cmd_args[0], "exit") == 0)
 	{
 		b_exit(args);
 		return (1);
 	}
-	if (_strcmp(args->cmd[0], "env") == 0)
+	if (_strcmp(args->cmd_args[0], "env") == 0)
 	{
 		builtin(args);
 		return (1);
 	}
 	return (0);
+}
+
+/**
+ * _strdup - returns a pointer to a newly allocated space in memory,
+ * which contains a copy of the string given as a parameter.
+ * @str: pointer to string.
+ * Return: On success, function returns a pointer to the duplicated string.
+ * It returns NULL if it fails.
+ */
+
+char *_strdup(char *str)
+{
+	char *new;
+	int i;
+
+	i = -1;
+	if (!str)
+		return (NULL);
+	new = malloc(sizeof(char) * (_strlen(str) + 1));
+	if (!new)
+		return (NULL);
+	while (str[++i])
+		new[i] = str[i];
+	new[i] = '\0';
+	return (new);
 }

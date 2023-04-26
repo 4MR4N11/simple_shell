@@ -49,39 +49,39 @@ int words_counter(char *str, int c)
  */
 void path_cmd_join(args_t *args)
 {
-	int cmd_len = _strlen(args->cmd[0]);
+	int cmd_len = _strlen(args->cmd_args[0]);
 	int j = 0;
 
-	if (access(args->cmd[0], F_OK) == 0)
+	if (access(args->cmd_args[0], F_OK) == 0)
 	{
+		args->cmd = _strdup(args->cmd_args[0]);
 		args->check = 1;
 		return;
 	}
 	while (args->path[j])
 	{
-		args->tmp = malloc(sizeof(char) * cmd_len + _strlen(args->path[j]) + 1);
-		if (!args->tmp)
+		args->cmd = malloc(sizeof(char) * cmd_len + _strlen(args->path[j]) + 1);
+		if (!args->cmd)
 		{
 			free_all(args);
 			perror(args->av[0]);
 			exit(EXIT_FAILURE);
 		}
-		_strcpy(args->tmp, args->path[j]);
-		_strcat(args->tmp, args->cmd[0]);
-		if (access(args->tmp, F_OK) == 0)
+		_strcpy(args->cmd, args->path[j]);
+		_strcat(args->cmd, args->cmd_args[0]);
+		if (access(args->cmd, F_OK) == 0)
 		{
 			args->check = 1;
-			args->cmd[0] = args->tmp;
 			return;
 		}
 		errno = 0;
-		free(args->tmp);
-		args->tmp = NULL;
+		free(args->cmd);
+		args->cmd = NULL;
 		j++;
 	}
-	if (_strncmp(args->cmd[0], "./", 2) == 0)
+	if (_strncmp(args->cmd_args[0], "./", 2) == 0)
 	{
-		if (access(args->cmd[0], F_OK) == 0)
+		if (access(args->cmd_args[0], F_OK) == 0)
 		{
 			args->check = 1;
 			return;
@@ -104,27 +104,27 @@ void split_cmd(args_t *args)
 	i = 0;
 	if (args->buff)
 	{
-		if (args->cmd)
+		if (args->cmd_args)
 		{
-			free(args->tmp);
 			free(args->cmd);
-			args->tmp = NULL;
+			free(args->cmd_args);
 			args->cmd = NULL;
+			args->cmd_args = NULL;
 		}
 		args->words = words_counter(args->buff, 1);
 		if (!args->words)
 			return;
-		args->cmd = malloc(sizeof(char *) * (args->words + 1));
-		if (!args->cmd)
+		args->cmd_args = malloc(sizeof(char *) * (args->words + 1));
+		if (!args->cmd_args)
 		{
 			free_all(args);
 			perror(args->av[0]);
 			exit(EXIT_FAILURE);
 		}
-		args->cmd[0] = strtok(args->buff, " \n\t");
+		args->cmd_args[0] = strtok(args->buff, " \n\t");
 		while (++i < args->words)
-			args->cmd[i] = strtok(NULL, " \n\t");
-		args->cmd[args->words] = NULL;
+			args->cmd_args[i] = strtok(NULL, " \n\t");
+		args->cmd_args[args->words] = NULL;
 		path_cmd_join(args);
 	}
 }

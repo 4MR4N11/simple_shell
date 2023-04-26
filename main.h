@@ -13,7 +13,7 @@
 #define BUFFSIZE 120
 /**
  * struct args - all used arguments and variables.
- * @cmd: command with arguments
+ * @cmd_args: command with arguments
  * @env: environment variables
  * @buff: buffer to read
  * @len: length of buffer
@@ -23,12 +23,12 @@
  * @path: path directories
  * @check: check value for execve
  * @input_count: number of inputs
- * @tmp: temporary string
+ * @cmd: command with full path
  * @errno_value: errno value to exit
  */
 typedef struct args
 {
-	char **cmd;
+	char **cmd_args;
 	char **env;
 	char *buff;
 	size_t len;
@@ -38,7 +38,7 @@ typedef struct args
 	char **path;
 	int check;
 	int input_count;
-	char *tmp;
+	char *cmd;
 	int errno_value;
 } args_t;
 
@@ -62,5 +62,6 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 char *_strpbrk(const char *str1, const char *str2);
 size_t _strspn(const char *str1, const char *str2);
 char *_strtok(char *str, const char *delim);
+char *_strdup(char *str);
 
 #endif
