@@ -16,11 +16,13 @@ The repository contains the following files:
 
 - `main.h`: Header file containing all function prototypes and libraries used in the project.
 - `main.c`: Contains the main loop of the shell.
-- `parse_cmd.c`: Contains the function that parses the command line.
+- `parse_cmd.c`: Contains the function that parses the command line and the path.
 - `execution.c`: Contains the functions that execute the commands.
 - `functions1.c`: Contains some utils functions.
 - `functions2.c`: Contains some utils functions.
 - `functions3.c`: Contains some utils functions.
+- `b_env.c`: Contains `env()` built-in.
+- `b_exit.c`: Contains `exit()` built-in(without arguments).
 
 ## Usage
 
